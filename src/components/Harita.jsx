@@ -1,49 +1,121 @@
-import React, { useRef, useState } from 'react'
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import osm from './osm-provider'
-import 'leaflet/dist/leaflet.css';
+import React, { useRef, useState } from "react";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  Polyline,
+} from "react-leaflet";
+import osm from "./osm-provider";
+import "leaflet/dist/leaflet.css";
+import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
 
 function Harita() {
-  const [center, setCenter] = useState({lat:40.193298, lng: 29.074202});
+  const [startLocation, setStartLocation] = useState({ lat: null, lng: null });
+  const [endLocation, setEndLocation] = useState({ lat: null, lng: null });
+  const [route, setRoute] = useState([]);
+  const [center, setCenter] = useState({ lat: 40.193298, lng: 29.074202 });
   const [markers, setMarkers] = useState([]);
   const zoomLevel = 10;
-  
+  const provider = new OpenStreetMapProvider();
 
   const handleDoubleClick = (event) => {
-    event.preventDefault(); // dblclick olayının varsayılan davranışını engelle
-
+    event.preventDefault();
     const { lat, lng } = event.latlng;
 
-    // Yeni işaretlenen konumu ekleyin
     setMarkers((prevMarkers) => [...prevMarkers, { lat, lng }]);
   };
-  
+  const handleStartInputChange = async (event) => {
+    const { value } = event.target;
+    // Örnek olarak, virgül ile ayrılan bir stringi iki konum bilgisine böler
+    try {
+      const results = await provider.search({ query: value });
+      if (results.length > 0) {
+        const { y, x } = results[0];
+        setStartLocation({ lat: y, lng: x });
+      } else {
+        // Konum bulunamadığında yapılacak işlemleri burada gerçekleştirebilirsiniz
+        console.warn("Konum bulunamadı:", value);
+      }
+    } catch (error) {
+      console.error("Konum çözümleme hatası:", error);
+    }
+  };
+  const handleEndInputChange = async (event) => {
+    const { value } = event.target;
+    try {
+      const results = await provider.search({ query: value });
+      if (results.length > 0) {
+        const { y, x } = results[0];
+        setEndLocation({ lat: y, lng: x });
+      } else {
+        // Konum bulunamadığında yapılacak işlemleri burada gerçekleştirebilirsiniz
+        console.warn("Konum bulunamadı:", value);
+      }
+    } catch (error) {
+      console.error("Konum çözümleme hatası:", error);
+    }
+  };
+  const handleCreateRoute = () => {
+    // Rota oluşturmak için iki konum arasında bir çizgi (Polyline) ekleyin
+    setRoute([startLocation, endLocation]);
+  };
+
+  const searchControl = new GeoSearchControl({
+    provider: provider,
+    autoCompleteDelay: 300,
+    showMarker: false,
+    retainZoomLevel: false,
+    animateZoom: true,
+    autoClose: true,
+    searchLabel: "Adres, ilçe, mahalle...",
+    keepResult: false,
+  });
 
   return (
     <>
-      <div >
+      <div>
+        <div>
+          <label>Başlangıç Konumu:</label>
+          <input type="text" onChange={handleStartInputChange} />
+        </div>
+        <div>
+          <label>Bitiş Konumu:</label>
+          <input type="text" onChange={handleEndInputChange} />
+        </div>
+        <button type='button'onClick={handleCreateRoute}>Rota Oluştur</button>
+      </div>
+      <div>
         <MapContainer
-        center={center}
-        zoom={zoomLevel}      
-        className='mapContent'
-        onClick={handleDoubleClick}
+          center={[40.193298, 29.074202]}
+          zoom={zoomLevel}
+          className="mapContent"
+          onClick={handleDoubleClick}
         >
-          <TileLayer url={osm.maptiler.url} attribution={osm.maptiler.attribution}/>
-          {/* Mevcut Konum */}
-          <Marker position={center}>
-            <Popup>Mevcut Konum</Popup>
-          </Marker>
-
-          {/* İşaretlenen Konumlar */}
-          {markers.map((marker, index) => (
-            <Marker key={index} position={marker}>
-              <Popup>İşaretlenen Konum {index + 1}</Popup>
+          <TileLayer
+            url={osm.maptiler.url}
+            attribution={osm.maptiler.attribution}
+          />
+          {/* Başlangıç Konumu */}
+          {startLocation && (
+            <Marker position={startLocation}>
+              <Popup>Başlangıç Konumu</Popup>
             </Marker>
-          ))}
+          )}
+
+          {/* Bitiş Konumu */}
+          {endLocation && (
+            <Marker position={endLocation}>
+              <Popup>Bitiş Konumu</Popup>
+            </Marker>
+          )}
+
+          {/* Rota (Polyline) */}
+          {route.length > 0 && <Polyline positions={route} color="blue" />}
         </MapContainer>
       </div>
     </>
-  )
+  );
 }
 
-export default Harita
+export default Harita;

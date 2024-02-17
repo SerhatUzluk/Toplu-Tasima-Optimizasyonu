@@ -99,7 +99,7 @@ function Anasayfa() {
               </form>
             </div>
             <div className='mapInformation'>
-              <Harita/>
+              
             </div>
         </div>
     </>

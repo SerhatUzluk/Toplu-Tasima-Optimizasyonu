@@ -3,13 +3,14 @@ import Anasayfa from './pages/Anasayfa'
 import Navbar from './components/Navbar'
 import 'leaflet/dist/leaflet.css';
 import './App.css'
+import RotaBildirim from './pages/RotaBildirim';
 
 function App() {
 
   return (
     <>
     <Navbar/>
-    <Anasayfa/> 
+    <RotaBildirim/>
     </>
   )
 }

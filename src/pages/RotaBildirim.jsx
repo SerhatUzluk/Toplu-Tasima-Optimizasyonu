@@ -1,4 +1,5 @@
 import React from 'react'
+import Harita from '../components/Harita'
 
 function RotaBildirim() {
   return (
@@ -18,7 +19,18 @@ function RotaBildirim() {
                         <option value="ozel">Özel</option>
                     </select>                
                     </div>
-
+                    <div className='mapContent'>
+                        <Harita/>
+                    </div>
+                    <div className='form-group'>
+                  <label htmlFor="goingTime">Gidiş Zamanı:</label>
+                  <input type="datetime-local" />
+                </div>
+                <div className='form-group'>
+                  <label htmlFor="returnTime">Geri Dönüş Zamanı:</label>
+                  <input type="datetime-local" />
+                </div>
+                <button type="submit" class="btn btn-primary">Kaydet</button>
                 </form>
             </div>
         </div>
