@@ -9,10 +9,9 @@ import {
 import osm from "./osm-provider";
 import "leaflet/dist/leaflet.css";
 import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
-
+import { MainContext, useContext } from "../SiteContext";
 function Harita() {
-  const [startLocation, setStartLocation] = useState({ lat: null, lng: null });
-  const [endLocation, setEndLocation] = useState({ lat: null, lng: null });
+  const {startLocation, setStartLocation, endLocation, setEndLocation} = useContext(MainContext);
   const [route, setRoute] = useState([]);
   const [center, setCenter] = useState({ lat: 40.193298, lng: 29.074202 });
   const [markers, setMarkers] = useState([]);
