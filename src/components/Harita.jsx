@@ -10,8 +10,10 @@ import osm from "./osm-provider";
 import "leaflet/dist/leaflet.css";
 import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
 import { MainContext, useContext } from "../SiteContext";
+import '../pages/style/RotaBildirim.css'
 function Harita() {
-  const {startLocation, setStartLocation, endLocation, setEndLocation} = useContext(MainContext);
+  const { startLocation, setStartLocation, endLocation, setEndLocation } =
+    useContext(MainContext);
   const [route, setRoute] = useState([]);
   const [center, setCenter] = useState({ lat: 40.193298, lng: 29.074202 });
   const [markers, setMarkers] = useState([]);
@@ -75,20 +77,20 @@ function Harita() {
     <>
       <div>
         <div>
-          <label>Başlangıç Konumu:</label>
-          <input type="text" onChange={handleStartInputChange} />
+          <label className="second-map-head">Başlangıç Konumu:</label>
+          <input type="text" onChange={handleStartInputChange} className="input-group-text" />
         </div>
         <div>
-          <label>Bitiş Konumu:</label>
-          <input type="text" onChange={handleEndInputChange} />
-        </div>
-        <button type='button'onClick={handleCreateRoute}>Rota Oluştur</button>
+          <label className="second-map-head">Bitiş Konumu:</label>          
+          <input type="text" onChange={handleEndInputChange} className="input-group-text"/>
+        </div>        
       </div>
-      <div>
+      <hr />
+      <div className="route-map-container">
         <MapContainer
           center={[40.193298, 29.074202]}
           zoom={zoomLevel}
-          className="mapContent"
+          className="mapContent "
           onClick={handleDoubleClick}
         >
           <TileLayer

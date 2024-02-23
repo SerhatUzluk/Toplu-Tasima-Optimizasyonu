@@ -1,21 +1,57 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import logo from '../images/BursaLogo.jpg'
+import React from "react";
+import { Link } from "react-router-dom";
+import logo from "../images/BursaLogo.jpg";
+import "./style/Navbar.css";
 function Navbar() {
   return (
     <>
-        <div>
-            <nav>
-                <img src={logo} alt="logo" className='logo'/>
-                <ul>
-                    <li>
-                        <a href='#'>Özel Rota Bildirme</a>
-                    </li>
-                </ul>
-            </nav>
+      <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-nav" data-bs-theme="dark" id="navbarNav">
+      <div className="container-fluid navbar-container">
+        <Link to="/" className="navbar-brand logo">
+          <img src={logo} alt="" />
+        </Link>
+
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <Link to="/HatYogunlukBildirim" className="nav-link active myLink" aria-current="page">
+                Hat Yoğunluk Bildirme
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/RotaIstekSayfasi" className="nav-link active myLink" aria-current="page">
+                Rota İstek Bildirme
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/MevcutHatIstekleri" className="nav-link active myLink" aria-current="page">
+                Mevcut Hat İsteklerini Görüntüle
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/MevcutRotaIstekleri" className="nav-link active myLink" aria-current="page">
+                Mevcut Rota İsteklerini Görüntüle
+              </Link>
+            </li>
+          </ul>
         </div>
+      </div>
+      
+    </nav>
     </>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;

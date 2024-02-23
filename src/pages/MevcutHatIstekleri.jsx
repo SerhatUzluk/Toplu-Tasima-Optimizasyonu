@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import './style/MevcutHatIstekleri.css'
 function MevcutHatIstekleri() {
     const[transportationLines, setTransportationLines] = useState([]);    
     const [filteredDataList, setFilteredDataList] = useState([]);
@@ -35,47 +36,57 @@ function MevcutHatIstekleri() {
 
   return (
     <>
-      <div>
-        <h1>İstek Yapılan Otobüs Hatları</h1>
+      <div className="container container-request">
+        <div className="request-head-container">
+        <h1 className="request-head display-4"><b>İstek Yapılan Otobüs Hatları</b></h1>
+        </div>
+        <hr />
         <div className="form-group">
-          <h2>Gidiş Tarihini Seçiniz</h2>
-          <label htmlFor="start">Başlangıç Tarihi:</label>
+          <h2 className="request-second-head display-5">Gidiş Tarihini Seçiniz</h2>          
+          <label htmlFor="start" className="date-head">Gidiş Başlangıç Tarihi:</label>
           <input
             type="datetime-local"
             id="start"
             value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-          />
-          <label htmlFor="end">Bitiş Tarihi:</label>
+            onChange={(e) => setStartDate(e.target.value)
+            }
+            className="form-control"
+          />          
+          <label htmlFor="end" className="date-head">Gidiş Bitiş Tarihi:</label>
           <input
             type="datetime-local"
             id="end"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
+            className="form-control"
           />
         </div>
-        <button onClick={handleFilter}>Filtrele</button>
+        <button onClick={handleFilter} className="btn btn-success custom-button">Gidişe Göre Filtrele</button>
+        <hr />
         <div className="form-group">
-          <h2>Dönüş Saatini Seçiniz:</h2>
-          <label htmlFor="donusStart">Dönüş Başlangıç Tarihi:</label>
+          <h2 className="request-second-head display-5">Dönüş Tarihini Seçiniz:</h2>          
+          <label htmlFor="donusStart" className="date-head">Dönüş Başlangıç Tarihi:</label>
           <input
             type="datetime-local"
             id="donusStart"
             value={donusStartDate}
             onChange={(e) => setDonusStartDate(e.target.value)}
-          />
-          <label htmlFor="donusEnd">Dönüş Bitiş Tarihi:</label>
+            className="form-control"
+          />          
+          <label htmlFor="donusEnd" className="date-head">Dönüş Bitiş Tarihi:</label>
           <input
             type="datetime-local"
             id="donusEnd"
             value={donusEndDate}
             onChange={(e) => setDonusEndDate(e.target.value)}
+            className="form-control"
           />
         </div>
-        <button onClick={handleFilter}>Dönüş Filtrele</button>
-        <div className="form-group">
-          <label htmlFor="">Mevcut İstekler:</label>
-          <table>
+        <button onClick={handleFilter} className="btn btn-success custom-button">Dönüşe Göre Filtrele</button>
+        <hr />
+        <div className="form-group request-table-container">
+          <label htmlFor="" className="table-head display-5"><b>Mevcut İstekler:</b></label>
+          <table className="table table-bordered">
             <tr><th>Hat Adı</th><th>Binilecek Durak</th><th>İnilecek Durak</th><th>Gidiş Zamanı</th><th>Dönüş Zamanı</th></tr>
             {filteredDataList.length > 0
               ? filteredDataList.map((hatlar) => (

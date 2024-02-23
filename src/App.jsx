@@ -7,6 +7,8 @@ import RotaBildirim from './pages/RotaBildirim';
 import { MainContext } from './SiteContext';
 import MevcutHatIstekleri from './pages/MevcutHatIstekleri';
 import MevcutRotaIstekleri from './pages/MevcutRotaIstekleri';
+import SiteRoutes from './SiteRoutes';
+import Footer from './components/Footer';
 function App() {
   const [startLocation, setStartLocation] = useState({ lat: null, lng: null });
   const [endLocation, setEndLocation] = useState({ lat: null, lng: null });
@@ -21,8 +23,9 @@ function App() {
     <>
     <Navbar/>
     <MainContext.Provider value={data}>
-    <MevcutRotaIstekleri/>
+    <SiteRoutes/>
     </MainContext.Provider>
+    <Footer/>
     </>
   )
 }

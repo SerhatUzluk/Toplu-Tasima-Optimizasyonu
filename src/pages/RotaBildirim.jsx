@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Harita from "../components/Harita";
 import { MainContext, useContext } from "../SiteContext";
-
+import './style/RotaBildirim.css'
 function RotaBildirim() {
   const { startLocation, endLocation } = useContext(MainContext);
   const { lat: baslangicLat, lng: baslangicLng } = ({});
@@ -59,21 +59,21 @@ function RotaBildirim() {
 
   return (
     <>
-      <div className="container">
-        <div className="serviceInfo">
-          <h1>Hizmetin Amacı</h1>
-          <p>Bu hizmet eksik olduğunu düşündüğünüz ulaşım hatları hakkında bildirim oluşturmanızı sağlayacak ayrıca yakın rotalarda yeteri kadar bildirimde bulunulduğunda
-            istenilen güne ve rotaya özel araç tahsis edilmesini mümkün kılacaktır.
-          </p>
+      <div className="container route-plan-container">
+        <div>
+          <h1 className="display-4 route-head-container"><b>Rota İstek Bildirimi</b></h1>
+        </div>
+        <div className="serviceInfo">          
         </div>
         <div className="dataInput">
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label htmlFor="userType">Kullanıcı Türü:</label>
+              <label htmlFor="userType" className="second-route-head">Kullanıcı Türü:</label>
               <select
                 id="userTypes"
                 name="kullaniciTipi"
                 onChange={(e) => handleInputChange(e)}
+                className="form-select"
               >
                 <option value="ogrenci">Öğrenci</option>
                 <option value="calisan">Çalışan</option>
@@ -83,34 +83,39 @@ function RotaBildirim() {
             <div className="mapContent">
               <Harita />
             </div>
+            <hr />
             <div className="form-group">
-              <label htmlFor="goingTime">Gidiş Zamanı:</label>
+              <label htmlFor="goingTime" className="second-route-head">Gidiş Zamanı:</label>
               <input
                 type="datetime-local"
                 name="gidisZamani"
                 onChange={(e) => handleInputChange(e)}
+                className="form-control"
               />
             </div>
             <div className="form-group">
-              <label htmlFor="returnTime">Geri Dönüş Zamanı:</label>
+              <label htmlFor="returnTime" className="second-route-head">Geri Dönüş Zamanı:</label>
               <input
                 type="datetime-local"
                 name="donusZamani"
                 onChange={(e) => handleInputChange(e)}
+                className="form-control"
               />
             </div>
             <div className="form-group">
-              <label htmlFor="isWeekly">Haftalık Kullanımsa Seçiniz:</label>
+              <label htmlFor="isWeekly" className="second-route-head">Haftalık Kullanımsa Seçiniz:</label>
               <input
                 type="checkbox"
                 name="haftalikKullanim"
                 onChange={(e) => handleInputChange(e)}
+                className="form-check-input route-checkbox"                
               />
             </div>
             <button
               type="button"
               class="btn btn-primary"
               onClick={handleSubmit}
+              className="btn btn-success custom-button"
             >
               Kaydet
             </button>

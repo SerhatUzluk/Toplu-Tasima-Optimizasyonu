@@ -1,0 +1,71 @@
+
+
+.container-request{
+    background-color: rgb(248, 248, 244);
+    padding-bottom: 80px;
+
+    @media screen and (min-width: 600px) {
+    }
+}
+
+.request-table-container{
+    display: block;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.request-head{
+    text-align: center;
+    font-size: 2.8em;
+}
+
+.request-second-head{
+    font-size: 1.9em;
+    margin-top: 25px;
+    margin-bottom: 35px;
+}
+
+.request-table-container{
+    margin-top: 35px;
+}
+
+
+table{
+    border: 3px solid;
+    font-size: 1.5em;
+    background-color: azure;
+    margin-top: 15px;
+}
+
+.request-table td{
+    padding: 5px;
+    border: 2px solid;
+}
+
+.table-head{
+    font-size: 1.9em;
+}
+
+.date-head{
+    font-size: 1.9em;
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 15px;        
+}
+
+.custom-button{    
+    width: 200px;
+}
+
+.container button{
+    display: block;
+    margin: 25px auto;
+}
+
+.request-head-container{
+    background-color: #198754;
+    padding: 50px;
+    border-radius: 0 0 50px 50px;
+    color: white;    
+}
+
