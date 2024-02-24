@@ -6,6 +6,7 @@ import MevcutHatIstekleri from './pages/MevcutHatIstekleri';
 import MevcutRotaIstekleri from './pages/MevcutRotaIstekleri';
 import HatYogunlukBildirme from './pages/HatYogunlukBildirme';
 
+
 function SiteRoutes() {
   return (
     <Routes>
@@ -13,7 +14,7 @@ function SiteRoutes() {
         <Route path='/HatYogunlukBildirim' element={<HatYogunlukBildirme/>} />
         <Route path='/RotaIstekSayfasi' element={<RotaBildirim/>} />
         <Route path='/MevcutHatIstekleri' element={<MevcutHatIstekleri/>}/>
-        <Route path='/MevcutRotaIstekleri' element={<MevcutRotaIstekleri/>} />
+        <Route path='/MevcutRotaIstekleri' element={<MevcutRotaIstekleri/>} />        
     </Routes>
   );
 }

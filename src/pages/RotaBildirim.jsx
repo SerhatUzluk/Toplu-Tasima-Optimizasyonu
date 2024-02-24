@@ -102,8 +102,8 @@ function RotaBildirim() {
                 className="form-control"
               />
             </div>
-            <div className="form-group">
-              <label htmlFor="isWeekly" className="second-route-head">Haftalık Kullanımsa Seçiniz:</label>
+            <div className="form-group weekly-content">
+              <label htmlFor="isWeekly" className="weekly-head"><b>Haftalık Kullanımsa Seçiniz:</b></label>
               <input
                 type="checkbox"
                 name="haftalikKullanim"

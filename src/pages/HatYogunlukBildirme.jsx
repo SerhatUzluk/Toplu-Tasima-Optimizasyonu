@@ -192,6 +192,7 @@ function HatYogunlukBildirme() {
         </div>
         <div className="mapInformation"></div>
       </div>
+
     </>
   );
 }

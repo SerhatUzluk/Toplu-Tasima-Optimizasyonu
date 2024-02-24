@@ -111,7 +111,7 @@ function MevcutRotaIstekleri() {
         <hr />
         <div className="routes-table-container form-group">
           <label htmlFor="" className="display-5">
-            <b>Mevcut Rota İstekleri:</b>
+            <b>Mevcut Rota İstekleri</b>
           </label>
           <table className="table table-bordered">
             <tr>

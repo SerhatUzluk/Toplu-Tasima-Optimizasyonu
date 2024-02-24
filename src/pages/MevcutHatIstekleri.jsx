@@ -64,7 +64,7 @@ function MevcutHatIstekleri() {
         <button onClick={handleFilter} className="btn btn-success custom-button">Gidişe Göre Filtrele</button>
         <hr />
         <div className="form-group">
-          <h2 className="request-second-head display-5">Dönüş Tarihini Seçiniz:</h2>          
+          <h2 className="request-second-head display-5">Dönüş Tarihini Seçiniz</h2>          
           <label htmlFor="donusStart" className="date-head">Dönüş Başlangıç Tarihi:</label>
           <input
             type="datetime-local"
@@ -85,7 +85,7 @@ function MevcutHatIstekleri() {
         <button onClick={handleFilter} className="btn btn-success custom-button">Dönüşe Göre Filtrele</button>
         <hr />
         <div className="form-group request-table-container">
-          <label htmlFor="" className="table-head display-5"><b>Mevcut İstekler:</b></label>
+          <label htmlFor="" className="table-head display-5"><b>Mevcut İstekler</b></label>
           <table className="table table-bordered">
             <tr><th>Hat Adı</th><th>Binilecek Durak</th><th>İnilecek Durak</th><th>Gidiş Zamanı</th><th>Dönüş Zamanı</th></tr>
             {filteredDataList.length > 0

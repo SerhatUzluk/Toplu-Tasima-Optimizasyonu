@@ -4,17 +4,17 @@
 }
 
 .second-route-head{
-    font-size: 1.9em;
+    font-size: 1.5em;
     margin-top: 25px;
     margin-bottom: 35px;
     font-weight: bold;
 }
 
 .second-map-head{
-    font-size: 1.9em;
+    font-size: 1.5em;
     margin-top: 25px;
     margin-bottom: 10px;
-    font-weight: bold;
+    font-weight: bolder;
 }
 
 .route-map-container{
@@ -24,8 +24,7 @@
 }
 
 .route-checkbox{
-    margin-top: 45px;   
-    margin-left: 10px; 
+  margin-left: 20px;
 }
 
 .route-head-container{
@@ -34,4 +33,9 @@
     border-radius: 0 0 50px 50px;
     color: white;
     text-align: center;
+}
+
+.weekly-content{
+    margin-top: 35px;
+    font-size: 1em;
 }
