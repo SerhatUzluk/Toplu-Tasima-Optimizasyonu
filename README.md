@@ -49,3 +49,8 @@
 * _Spring-Boot_
 * _MySql_
 ### Back end kodlarına buradan erişebilirsiniz: https://github.com/SerhatUzluk/Toplu-Tasima-Optimizasyonu-Backend
+
+### Uygulama'da kullanılan apiler: 
+* Otobüs durakları: https://acikyesil.bursa.bel.tr/dataset/duraklar
+* Otobüs hatları: https://acikyesil.bursa.bel.tr/dataset/hatlar
+* Harita bilgileri: https://cloud.maptiler.com/
