@@ -55,4 +55,4 @@
 * Otobüs hatları: https://acikyesil.bursa.bel.tr/dataset/hatlar
 * Harita bilgileri: https://cloud.maptiler.com/
 
-* **uygulama linki:** https://toplu-tasima-optimizasyonu.vercel.app/MevcutRotaIstekleri
+* **uygulama linki:** https://toplu-tasima-optimizasyonu.vercel.app/
