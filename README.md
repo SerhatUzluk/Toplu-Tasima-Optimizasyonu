@@ -55,4 +55,6 @@
 * Otobüs hatları: https://acikyesil.bursa.bel.tr/dataset/hatlar
 * Harita bilgileri: https://cloud.maptiler.com/
 
+  **Not:** 🩹 Otobüs hatları ve otobüs durakları API'lerine geçici olarak erişim sağlanamadığından Hat Yoğunluk Bildirme Hizmeti şuan aktif olarak çalışmamaktadır.
+
 * **uygulama linki:** https://toplu-tasima-optimizasyonu.vercel.app/
