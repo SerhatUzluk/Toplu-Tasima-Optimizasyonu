@@ -25,6 +25,7 @@
 
 .request-table-container{
     margin-top: 35px;
+    overflow-x: auto;
 }
 
 
@@ -32,7 +33,7 @@ table{
     border: 3px solid;
     font-size: 1.3em;
     background-color: azure;
-    margin-top: 15px;
+    margin-top: 15px;        
 }
 
 .request-table td{
@@ -67,3 +68,13 @@ table{
     color: white;    
 }
 
+@media (max-width: 600px) {
+    
+    table {
+      width: 400px;
+    }   
+  
+    th, td {
+      width: 10px;
+    }
+  }

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Harita from "../components/Harita";
 import { MainContext, useContext } from "../SiteContext";
 import './style/RotaBildirim.css'
+import {collection, addDoc } from "firebase/firestore"
+import {db} from '../script.js'
 function RotaBildirim() {
   const { startLocation, endLocation } = useContext(MainContext);
   const { lat: baslangicLat, lng: baslangicLng } = ({});
@@ -28,26 +30,19 @@ function RotaBildirim() {
     haftalikKullanim: false,
   });
 
+  const transportationLineRef = collection(db, "RotaIstemBilgisi");
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    fetch("http://localhost:2555/api/rotaIstemBilgisi", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-      method: "POST",
-      mode: "cors",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        alert("Rota isteği gönderildi.");
-        console.log(formData);
-      })
-      .catch((error) => {
-        // Post işlemi sırasında bir hata oluştuğunda buraya gelir
-        console.log(formData);
-        console.error("Post hatası:", error);
-      });
+    if(formData.kullaniciTipi == '' || formData.gidisZamani == '' || formData.donusZamani == '' || formData.baslangicLat == '' || formData.baslangicLng == '' || formData.bitisLat == '' || formData.bitisLng == ''){
+      alert('Lütfen tüm alanları doldurun!');      
+    }
+    else{
+      await addDoc(transportationLineRef, formData)
+      window.location.reload()
+      alert('Rota bildirme işleminiz başarıyla gerçekleştirildi.');
+    }
   };
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -56,7 +51,7 @@ function RotaBildirim() {
       [name]: type === "checkbox" ? checked : value,
     }));
   };
-
+  
   return (
     <>
       <div className="container route-plan-container">
@@ -75,6 +70,7 @@ function RotaBildirim() {
                 onChange={(e) => handleInputChange(e)}
                 className="form-select"
               >
+                <option value="default" disabled selected>Kullanıcı tipini seçiniz.</option>
                 <option value="ogrenci">Öğrenci</option>
                 <option value="calisan">Çalışan</option>
                 <option value="ozel">Özel</option>
@@ -111,11 +107,10 @@ function RotaBildirim() {
                 className="form-check-input route-checkbox"                
               />
             </div>
-            <button
-              type="button"
-              class="btn btn-primary"
-              onClick={handleSubmit}
+            <button              
+              class="btn btn-primary"              
               className="btn btn-success custom-button"
+              type='submit'
             >
               Kaydet
             </button>

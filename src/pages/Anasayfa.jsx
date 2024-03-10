@@ -3,6 +3,7 @@ import firstImage from "../images/anasayfa1.jpg";
 import secondImage from "../images/anasayfa2.jpg";
 import "./style/Anasayfa.css";
 import { Link } from "react-router-dom";
+
 function Anasayfa() {
   return (
     <>

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./style/MevcutRotaBildirim.css";
+import { collection, getDocs, doc } from "firebase/firestore";
+import { db } from "../script.js";
 function MevcutRotaIstekleri() {
   const [routes, setRoutes] = useState([]);
   const [startDate, setStartDate] = useState("");
@@ -7,15 +9,22 @@ function MevcutRotaIstekleri() {
   const [donusStartDate, setDonusStartDate] = useState("");
   const [donusEndDate, setDonusEndDate] = useState("");
   const [filteredDataList, setFilteredDataList] = useState([]);
+
+  const currentRoute = collection(db, "RotaIstemBilgisi");
+
   useEffect(() => {
-    fetch("http://localhost:2555/api/rotaIstemBilgisi")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setRoutes(data);
-      });
-  }, []);
+    const getRoutesData = async () => {
+      try {
+        const data = await getDocs(currentRoute);
+        setRoutes(
+          data.docs.map((elem) => ({ ...elem.data(), id: elem.id }))
+        );
+      } catch (error) {
+        console.error("Error fetching route data:", error);
+      }
+    };
+    getRoutesData();
+  }, [currentRoute]);
 
   const handleFilter = () => {
     const filteredData = routes.filter((rotalar) => {
@@ -74,7 +83,7 @@ function MevcutRotaIstekleri() {
           onClick={handleFilter}
           className="btn btn-success custom-button"
         >
-          Filtrele
+          Gidişe Göre Filtrele
         </button>
         <hr />
         <div className="form-group">
@@ -106,7 +115,7 @@ function MevcutRotaIstekleri() {
           onClick={handleFilter}
           className="btn btn-success custom-button"
         >
-          Dönüş Filtrele
+          Dönüşe Göre Filtrele
         </button>
         <hr />
         <div className="routes-table-container form-group">
@@ -130,8 +139,8 @@ function MevcutRotaIstekleri() {
                     <td>{rotalar.baslangicLng}</td>
                     <td>{rotalar.bitisLat}</td>
                     <td>{rotalar.bitisLng}</td>
-                    <td>{rotalar.gidisZamani}</td>
-                    <td>{rotalar.donusZamani}</td>
+                    <td>{rotalar.gidisZamani.toLocaleString()}</td>
+                    <td>{rotalar.donusZamani.toLocaleString()}</td>
                     <td>{rotalar.kullaniciTipi}</td>
                   </tr>
                 ))
@@ -141,8 +150,8 @@ function MevcutRotaIstekleri() {
                     <td>{rotalar.baslangicLng}</td>
                     <td>{rotalar.bitisLat}</td>
                     <td>{rotalar.bitisLng}</td>
-                    <td>{rotalar.gidisZamani}</td>
-                    <td>{rotalar.donusZamani}</td>
+                    <td>{rotalar.gidisZamani.toLocaleString()}</td>
+                    <td>{rotalar.donusZamani.toLocaleString()}</td>
                     <td>{rotalar.kullaniciTipi}</td>
                   </tr>
                 ))}

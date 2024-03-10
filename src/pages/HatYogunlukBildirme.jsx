@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
 import './style/HatYogunlukBildirme.css'
+import { Navigate } from "react-router-dom";
+import { duraklar }  from "../duraklar.js";
+import { hatlar } from "../data.js";
+import {collection, onSnapshot, addDoc, doc } from "firebase/firestore"
+import {db} from '../script.js'
 function HatYogunlukBildirme() {
+  
+  const [selectedLine, setSelectedLine] = useState("1055");  
   const [busStop, setBusStop] = useState([]);
-  const [selectedLine, setSelectedLine] = useState(1050);
-  const [transportationLine, setTransportationLine] = useState([]);
+  
 
   const [formData, setFormData] = useState({
     kullaniciTipi: "",
@@ -15,152 +21,134 @@ function HatYogunlukBildirme() {
     gidisYonu: "",
     haftalikKullanim: false,
   });
-
-  useEffect(() => {
-    fetch("https://petekapi.burulas.com.tr/burulasweb/otobus/hatlar")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setTransportationLine(data);
-      });
-  }, []);
-
+  const transportationLineRef = collection(db, "hatYogunlukBilgisi");
+    
   const handleDropdownChange = (event) => {
     const selectedValue = event.target.value;
-    const selectedHat = transportationLine.find(
-      (hat) => hat.HatAdi === selectedValue
-    ).HatId;
+    const selectedHat = hatlar.find((hat) => selectedValue === hat.name);
+    setSelectedLine(selectedHat.id);
+  
+    const filteredBusStops = duraklar
+      .filter((durak) => durak.hatId == selectedHat.id)      
+  
+    setBusStop(filteredBusStops);      
+  };
 
-    if (selectedHat) {
-      const selectedHatId = selectedHat;
-      console.log(selectedHatId);
-      setSelectedLine(selectedHatId);
-      setBusStop([]);
+  useEffect(() => {
+    
+  }, [busStop]);
+
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if(formData.hatBilgisi === '' || formData.binilecekDurak === '' || formData.inilecekDurak === '' || formData.gidisZamani === '' || formData.donusZamani === ''){
+      alert('Lütfen tüm alanları doldurun!')
+      return;
+    }
+    else{
+      await addDoc(transportationLineRef, formData)
+      window.location.reload()
+      alert('İsteğiniz başarıyla kaydedildi.')
     }
   };
 
-  useEffect(() => {
-    console.log(selectedLine);
-    fetch(
-      `https://petekapi.burulas.com.tr/burulasweb/otobus/duraklar?HatId=${selectedLine}`
-    )
-      .then((res) => {
-        return res.json();
-      })
-      .then((secondData) => {
-        setBusStop(secondData);
-      });
-  }, [selectedLine]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    fetch("http://localhost:2555/api/hatYogunlukBilgisi", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-      mode: "cors",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        alert("Kayıt işlemi başarılı.")
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.error("Post hatası:", error);
-      });
-  };
-
   const handleInputChange = (e) => {
+    const selectedValue = e.target.value;
+     
     const { name, value, type, checked } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: type === "checkbox" ? checked : value,
     }));
   };
+  
+  
 
 
   return (
     <>
       <div className="container notification-content">
         <div className="notification-head-container">
-          <h1 className="notification-head">Hat Yogunluk Bildirme</h1>
+          <h1 className="notification-head display-4"><b>Hat Yogunluk Bildirme</b></h1>
           </div>     
         <div className="dataInput">
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label htmlFor="userType">Kullanıcı Türü:</label>
-              <select
+              <label htmlFor="userType" className="second-line-head">Kullanıcı Türü:</label>
+              <select required
                 name="kullaniciTipi"
                 id="userTypes"
                 onChange={(e) => handleInputChange(e)}
                 className="form-select"
               >
+                <option value="default" disabled selected >Kullanıcı tipini seçiniz.</option>
                 <option value="ogrenci">Öğrenci</option>
                 <option value="calisan">Çalışan</option>
                 <option value="ozel">Özel</option>
               </select>
             </div>
             <div className="form-group">
-              <label htmlFor="transportationLineInfo">
+              <label htmlFor="transportationLineInfo" className="second-line-head">
                 Kullanılacak Ulaşım Hattı Bilgisi:
               </label>
               <select
                 name="hatBilgisi"
                 id="transportationInfo"
-                onChange={(e) => {
+                onChange= {(e) => {
                   handleDropdownChange(e);
                   handleInputChange(e);
                 }}
                 className="form-select"
               >
-                {transportationLine.map((hat) => (
-                  <option key={hat.HatId}>{hat.HatAdi}</option>
+                <option value="default" disabled selected>Kullanacağınız ulaşım hattını seçiniz.</option>
+                {hatlar.map((hat) => (
+                  <option key={hat.id}>{hat.name}</option>
                 ))}
               </select>
             </div>
             <div className="form-group">
-              <label htmlFor="transportationLineType">Hat Yönü:</label>
+              <label htmlFor="transportationLineType" className="second-line-head">Hat Yönü:</label>
               <select
                 name="gidisYonu"
                 id="transportationLineType"
                 onChange={(e) => handleInputChange(e)}
                 className="form-select"
               >
+                <option value="default" disabled selected>Hat yönünü seçiniz.</option>
                 <option value="true">Gidiş</option>
                 <option value="false">Dönüş</option>
               </select>
             </div>
             <div className="form-group">
-              <label htmlFor="selectBusStop">Bineceğiniz Durak:</label>
+              <label htmlFor="selectBusStop" className="second-line-head">Bineceğiniz Durak:</label>
               <select
-                name="binilecekDurakBilgisi"
-                id="busStop"
+                name="binilecekDurakBilgisi"                
                 onChange={(e) => handleInputChange(e)}
-                className="form-select"
+                className="form-select" 
+                id="busStop"               
               >
+                <option value="default" disabled selected>Bineceğiniz durağı seçiniz.</option>
                 {busStop.map((durak) => (
-                  <option key={durak.VaryantId}>{durak.DurakAdi}</option>
+                  <option key={durak.dataId}>{durak.durakAdi}</option>
                 ))}
               </select>
             </div>
             <div className="form-group">
-              <label htmlFor="selectBusStop">İneceğiniz Durak:</label>
+              <label htmlFor="selectBusStop" className="second-line-head">İneceğiniz Durak:</label>
               <select
-                name="inilecekDurakBilgisi"
-                id="busStop"
+                name="inilecekDurakBilgisi"              
                 onChange={(e) => handleInputChange(e)}
                 className="form-select"
+                id="busStop"                               
               >
+                <option value="default" disabled selected>İneceğiniz durağı seçiniz.</option>
                 {busStop.map((durak) => (
-                  <option key={durak.VaryantId}>{durak.DurakAdi}</option>
+                  <option key={durak.dataId}>{durak.durakAdi}</option>
                 ))}
               </select>
             </div>
             <div className="form-group">
-              <label htmlFor="goingTime" className="second-map-head">Gidiş Zamanı:</label>
+              <label htmlFor="goingTime" className="second-line-head">Gidiş Zamanı:</label>
               <input
                 type="datetime-local"
                 name="gidisZamani"
@@ -169,7 +157,7 @@ function HatYogunlukBildirme() {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="returnTime" className="second-map-head">Geri Dönüş Zamanı:</label>
+              <label htmlFor="returnTime" className="second-line-head">Geri Dönüş Zamanı:</label>
               <input
                 type="datetime-local"
                 name="donusZamani"
@@ -177,15 +165,16 @@ function HatYogunlukBildirme() {
                 className="form-control"
               />
             </div>
-            <div className="form-group">
-              <label htmlFor="isWeekly" className="second-map-head">Haftalık Kullanımsa Seçiniz:</label>
+            <div className="form-group weekly-content">
+              <label htmlFor="isWeekly" className="weekly-head"><b>Haftalık Kullanımsa Seçiniz:</b></label>
               <input
                 type="checkbox"
                 name="haftalikKullanim"
                 onChange={(e) => handleInputChange(e)}
+                className="form-check-input line-checkbox"
               />
             </div>
-            <button type="submit" class="btn btn-success custom-button">
+            <button  class="btn btn-success custom-button" type="submit" >
               Kaydet
             </button>
           </form>

@@ -13,4 +13,5 @@
 
 .routes-table-container{
     margin-top: 35px;
+    overflow-x: auto;
 }
