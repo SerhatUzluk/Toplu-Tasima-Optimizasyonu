@@ -46,15 +46,13 @@
 * _Bootsrap_ 
 
 ## Back end
-* _Spring-Boot_
-* _MySql_
-### Back end kodlarına buradan erişebilirsiniz: https://github.com/SerhatUzluk/Toplu-Tasima-Optimizasyonu-Backend
+* _Firebase_
+ 
 
 ### Uygulama'da kullanılan apiler: 
 * Otobüs durakları: https://acikyesil.bursa.bel.tr/dataset/duraklar
 * Otobüs hatları: https://acikyesil.bursa.bel.tr/dataset/hatlar
 * Harita bilgileri: https://cloud.maptiler.com/
-
-  **Not:** 🩹 Otobüs hatları ve otobüs durakları API'lerine geçici olarak erişim sağlanamadığından Hat Yoğunluk Bildirme Hizmeti şuan aktif olarak çalışmamaktadır.
+  
 
 * **uygulama linki:** https://toplu-tasima-optimizasyonu.vercel.app/
