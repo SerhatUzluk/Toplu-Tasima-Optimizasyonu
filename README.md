@@ -55,4 +55,4 @@
 * Harita bilgileri: https://cloud.maptiler.com/
   
 
-* **uygulama linki:** https://toplu-tasima-optimizasyonu-main.vercel.app/
+* **uygulama linki:** https://toplu-tasima-optimizasyonu-sigma.vercel.app/
